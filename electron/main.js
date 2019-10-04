@@ -7,11 +7,11 @@ function createWindow () {
   win = new BrowserWindow({
     width: 1300, 
     height: 1300,
-    icon: `file://${__dirname}/dist/assets/logo.png`
+    icon: `file://${__dirname}/../dist/assets/logo.png`
   })
 
 
-  win.loadURL(`file://${__dirname}/dist/index.html`)
+  win.loadURL(`file://${__dirname}/../dist/index.html`)
 
   //// uncomment below to open the DevTools.
   // win.webContents.openDevTools()
