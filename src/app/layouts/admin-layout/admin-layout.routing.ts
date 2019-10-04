@@ -1,9 +1,16 @@
 import { Routes } from "@angular/router";
 
 import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
-import { IconsComponent } from "../../pages/icons/icons.component";
+import { PlaygroundComponent } from 'src/app/pages/playground/playground.component';
 
 export const AdminLayoutRoutes: Routes = [
-  { path: "", component: DashboardComponent },
-  { path: "icons", component: IconsComponent },
+  {
+    path: '',
+    children: [
+      {
+        path: "dashboard", component: DashboardComponent
+      },
+      { path: "playgrounnd", component: PlaygroundComponent },
+    ]
+  },
 ];
