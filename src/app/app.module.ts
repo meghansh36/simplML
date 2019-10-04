@@ -12,6 +12,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { ComponentsModule } from "./components/components.module";
+import { AuthenticationComponent } from './pages/authentication/authentication.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { ComponentsModule } from "./components/components.module";
     AppRoutingModule,
     ToastrModule.forRoot()
   ],
-  declarations: [AppComponent, AdminLayoutComponent],
+  declarations: [AppComponent, AdminLayoutComponent,AuthenticationComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -4,15 +4,15 @@ import { BrowserModule } from "@angular/platform-browser";
 import { Routes, RouterModule } from "@angular/router";
 
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
+import { AuthenticationComponent } from './pages/authentication/authentication.component';
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "dashboard",
-    pathMatch: "full"
+    component: AuthenticationComponent
   },
   {
-    path: "",
+    path: "dashboard",
     component: AdminLayoutComponent,
     children: [
       {
@@ -38,4 +38,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
