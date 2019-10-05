@@ -1,5 +1,6 @@
 <div class="container">
-  <div class="row h-100">
+
+  <div class="row h-100" *ngIf="!showPipelineDesigner">
     <div class="offset-sm-4 col-sm-4" style="margin-top: 15%;">
       <div class="card text-center">
         <div class="card-header">
@@ -14,9 +15,16 @@
             <label> <strong>Name of your new project</strong></label>
             <input class=" form-control" placeholder="Something cool . ipynb" type="text" />
           </div>
-          <button class="btn btn-primary">Build my playground</button>
+          <button class="btn btn-primary" (click)="buildPlayground()">Build my playground</button>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="row h-100" *ngIf="showPipelineDesigner">
+    <div class="col-sm-12" style="margin-top: 15%;">
+      <app-design-pipeline></app-design-pipeline>
+    </div>
+  </div>
+
 </div>

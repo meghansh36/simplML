@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-playground',
   templateUrl: './playground.component.html',
   styleUrls: ['./playground.component.scss']
 })
 export class PlaygroundComponent implements OnInit {
+
   public lottieConfig: Object;
+  public showPipelineDesigner: boolean;
+  ngOnInit(): void {
+  }
 
   constructor() {
     this.lottieConfig = {
@@ -15,9 +20,11 @@ export class PlaygroundComponent implements OnInit {
       autoplay: true,
       loop: true
     };
+    this.showPipelineDesigner = false;
   }
 
-  ngOnInit() {
+  buildPlayground() {
+    this.showPipelineDesigner = true;
   }
 
 }

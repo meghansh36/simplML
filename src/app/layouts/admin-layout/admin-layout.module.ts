@@ -10,6 +10,7 @@ import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { PlaygroundComponent } from 'src/app/pages/playground/playground.component';
 import { LottieAnimationViewModule } from 'ng-lottie';
+import { DesignPipelineComponent } from 'src/app/pages/design-pipeline/design-pipeline.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { LottieAnimationViewModule } from 'ng-lottie';
   ],
   declarations: [
     DashboardComponent,
-    PlaygroundComponent
+    PlaygroundComponent,
+    DesignPipelineComponent
   ]
 })
 export class AdminLayoutModule { }
