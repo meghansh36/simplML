@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import Chart from 'chart.js';
 
-
 /**
  * @author Vasudev Awatramani
  * @description This component is for summarizing user's work in one place. 
@@ -21,10 +20,12 @@ export class DashboardComponent implements OnInit {
   public clicked: boolean = true;
   public clicked1: boolean = false;
   public clicked2: boolean = false;
+  public notebookContent;
 
   constructor() { }
 
   ngOnInit() {
+
     var gradientChartOptionsConfigurationWithTooltipRed: any = {
       maintainAspectRatio: false,
       legend: {

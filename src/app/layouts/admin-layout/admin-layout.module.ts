@@ -9,6 +9,7 @@ import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { PlaygroundComponent } from 'src/app/pages/playground/playground.component';
+import { LottieAnimationViewModule } from 'ng-lottie';
 
 @NgModule({
   imports: [
@@ -17,6 +18,8 @@ import { PlaygroundComponent } from 'src/app/pages/playground/playground.compone
     FormsModule,
     HttpClientModule,
     NgbModule,
+    LottieAnimationViewModule.forRoot()
+
   ],
   declarations: [
     DashboardComponent,

@@ -10,7 +10,7 @@ export const AdminLayoutRoutes: Routes = [
       {
         path: "dashboard", component: DashboardComponent
       },
-      { path: "playgrounnd", component: PlaygroundComponent },
+      { path: "playground", component: PlaygroundComponent },
     ]
   },
 ];

@@ -5,21 +5,15 @@
   "main": "electron/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-<<<<<<< HEAD
-    "electron": "electron .",
-    "electron-build": "ng build --prod && electron ."
-=======
     "build": "ng build --watch --base-href ./",
     "electron": "./node_modules/.bin/electron .",
     "electron-build": "ng build --prod --base-href ./ && ./node_modules/.bin/electron ."
->>>>>>> 9376a532f24758cb8ecddffb5026986a07114dd7
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meghansh36/simplML.git"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "private": false,
   "dependencies": {
     "@angular/animations": "8.0.2",

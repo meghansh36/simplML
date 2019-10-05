@@ -1,7 +1,22 @@
 <div class="container">
   <div class="row h-100">
-    <div class="col-sm-12 my-auto" style="margin-top:10%">
-      
+    <div class="offset-sm-4 col-sm-4" style="margin-top: 15%;">
+      <div class="card text-center">
+        <div class="card-header">
+          <h3 class="card-title"><strong>Exicited?</strong></h3>
+        </div>
+        <div class="card-body">
+          <lottie-animation-view [options]="lottieConfig" [width]="300" [height]="300">
+          </lottie-animation-view>
+        </div>
+        <div class="card-footer">
+          <div class=" form-group">
+            <label> <strong>Name of your new project</strong></label>
+            <input class=" form-control" placeholder="Something cool . ipynb" type="text" />
+          </div>
+          <button class="btn btn-primary">Build my playground</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
