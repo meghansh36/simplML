@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import Chart from 'chart.js';
+import { HttpClient } from '@angular/common/http';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 /**
  * @author Vasudev Awatramani
@@ -22,7 +24,7 @@ export class DashboardComponent implements OnInit {
   public clicked2: boolean = false;
   public notebookContent;
 
-  constructor() { }
+  constructor(private _httpClient: HttpClient, private _modalService: NgbModal) { }
 
   ngOnInit() {
 
@@ -281,5 +283,16 @@ export class DashboardComponent implements OnInit {
   public updateOptions() {
     this.myChartData.data.datasets[0].data = this.data;
     this.myChartData.update();
+  }
+
+
+  public showPreview(content) {
+    window.open('http://localhost:5000/preview', "_blank");
+
+    // this._httpClient.get()
+    //   .subscribe(response => {
+    //     this.notebookContent = response['notebook'];
+    //     this._modalService.open(content);
+    //   });
   }
 }

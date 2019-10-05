@@ -9,8 +9,8 @@ import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { PlaygroundComponent } from 'src/app/pages/playground/playground.component';
-import { DesignPipelineComponent } from 'src/app/pages/design-pipeline/design-pipeline.component';
 import { UtilityModule } from 'src/app/utility/utility.module';
+import { DesignPipelineComponent } from 'src/app/pages/design-pipeline/design-pipeline.component';
 
 @NgModule({
   imports: [
