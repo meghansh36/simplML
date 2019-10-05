@@ -8,18 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaygroundComponent implements OnInit {
 
-  public lottieConfig: Object;
   public showPipelineDesigner: boolean;
   ngOnInit(): void {
   }
 
   constructor() {
-    this.lottieConfig = {
-      path: 'assets/anim/anim-1.json',
-      renderer: 'canvas',
-      autoplay: true,
-      loop: true
-    };
     this.showPipelineDesigner = false;
   }
 

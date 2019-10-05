@@ -9,8 +9,8 @@ import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { PlaygroundComponent } from 'src/app/pages/playground/playground.component';
-import { LottieAnimationViewModule } from 'ng-lottie';
 import { DesignPipelineComponent } from 'src/app/pages/design-pipeline/design-pipeline.component';
+import { UtilityModule } from 'src/app/utility/utility.module';
 
 @NgModule({
   imports: [
@@ -19,7 +19,7 @@ import { DesignPipelineComponent } from 'src/app/pages/design-pipeline/design-pi
     FormsModule,
     HttpClientModule,
     NgbModule,
-    LottieAnimationViewModule.forRoot()
+    UtilityModule,
 
   ],
   declarations: [
