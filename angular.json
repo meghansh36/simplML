@@ -34,8 +34,7 @@
             ],
             "scripts": [
               "./node_modules/cytoscape/dist/cytoscape.min.js",
-              "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/qtip2/dist/jquery.qtip.min.js"
+              "./node_modules/jquery/dist/jquery.min.js"
             ],
             "es5BrowserSupport": true
           },
