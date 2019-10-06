@@ -76,7 +76,7 @@
                     </button>
 
                     <button class=" btn btn-link" type="button" placement="left" ngbTooltip="Preview" container="body"
-                      (click)="showPreview(content)">
+                      (click)="showPreview('sample')">
                       <i class=" tim-icons icon-triangle-right-17"> </i>
                     </button>
                   </td>
@@ -90,11 +90,11 @@
   </div>
 </div>
 
-<ng-template #content let-modal>
+<!-- <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Notebook Preview</h4>
   </div>
   <div class="modal-body">
     <div [innerHTML]="notebookContent"></div>
   </div>
-</ng-template>
+</ng-template> -->

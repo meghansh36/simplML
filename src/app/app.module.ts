@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { ToastrModule } from 'ngx-toastr';
+import { NgxElectronModule } from 'ngx-electron';
 
 import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
@@ -24,7 +25,8 @@ import { PlaygroundComponent } from './pages/playground/playground.component';
     NgbModule,
     RouterModule,
     AppRoutingModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NgxElectronModule
   ],
   declarations: [AppComponent, AdminLayoutComponent,AuthenticationComponent],
   providers: [],

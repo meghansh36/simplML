@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import Chart from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ElectronMsgService } from 'src/app/services/electron.service';
 
 /**
  * @author Vasudev Awatramani
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit {
   public clicked2: boolean = false;
   public notebookContent;
 
-  constructor(private _httpClient: HttpClient, private _modalService: NgbModal) { }
+  constructor(private _httpClient: HttpClient, private _modalService: NgbModal, private _electronService: ElectronMsgService) { }
 
   ngOnInit() {
 
@@ -286,13 +287,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  public showPreview(content) {
-    window.open('http://localhost:5000/preview', "_blank");
-
-    // this._httpClient.get()
-    //   .subscribe(response => {
-    //     this.notebookContent = response['notebook'];
-    //     this._modalService.open(content);
-    //   });
+  public showPreview(filename) {
+    this._electronService.fetchPreview(filename);
   }
 }
