@@ -4,6 +4,9 @@ const exec = require('child_process').exec;
 
 function execute(command, callback) {
     exec(command, (error, stdout, stderr) => {
+        if(error) {
+            console.log(error)
+        }
         callback(stdout);
     });
 };
@@ -12,6 +15,7 @@ app.get('/preview', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     execute('ipython nbconvert --to html sample.ipynb', (output) => {
+        console.log(output)
         var html = fs.readFileSync('./sample.html', 'utf8');
         res.status(200).send(html);
 
