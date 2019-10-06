@@ -1,6 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import * as go from 'gojs';
 
+
+
+declare var require: any;
+declare var cytoscape: any;
+const jquery = require('jquery');
+const edgehandles = require('cytoscape-edgehandles');
+const edgeBendEditing = require('cytoscape-edge-bend-editing');
+const ctxmenu = require('cytoscape-cxtmenu');
+
 @Component({
   selector: 'app-design-pipeline',
   templateUrl: './design-pipeline.component.html',
@@ -27,9 +36,26 @@ export class DesignPipelineComponent implements OnInit {
   @Output()
   modelChanged = new EventEmitter<go.ChangedEvent>();
 
+  cy: any;
+  eh: any;
+  edgeBendInstance: any;
+  contextInstance: any;
+
+
   constructor() {
+
+    this.cy = cytoscape({
+      container: document.querySelector('#cy'),
+      elements: [],
+      'minZoom': 0.6,
+      'maxZoom': 1.3,
+      layout: {
+        name: 'preset'
+      }
+    });
+
+
     const $ = go.GraphObject.make;
-    // Place GoJS license key here:
     // (go as any).licenseKey = "..."
     this.diagram = new go.Diagram();
     this.diagram.initialContentAlignment = go.Spot.Center;
@@ -70,24 +96,25 @@ export class DesignPipelineComponent implements OnInit {
         $(go.Shape),
         $(go.Shape, { toArrow: "OpenTriangle" })
       );
-
-    this.palette = new go.Palette();
-    this.palette.nodeTemplateMap = this.diagram.nodeTemplateMap;
-
-    // initialize contents of Palette
-    this.palette.model.nodeDataArray =
-      [
-        { text: "Alpha", color: "lightblue" },
-        { text: "Beta", color: "orange" },
-        { text: "Gamma", color: "lightgreen" },
-        { text: "Delta", color: "pink" },
-        { text: "Epsilon", color: "yellow" }
-      ];
   }
+
+
 
   ngOnInit() {
     this.diagram.div = this.diagramRef.nativeElement;
-    this.palette.div = this.paletteRef.nativeElement;
+  }
+
+
+  addNewComponent(): void {
+    this.diagram.model.addNodeData({
+      key: "IN", text: "CSV Input", color: "#7fffd4", stroke: "#4d90fe", description: "pd.read_csv(./path-specified-by-user)"
+    });
+  }
+
+  addNewComponent2(): void {
+    this.diagram.model.addNodeData({
+      key: "FE", text: "Feature Engineering", color: "#f5f5dc", stroke: "#4d90fe", description: "normalizer.fit_transform(x,y)"
+    });
   }
 
 }

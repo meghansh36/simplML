@@ -1,4 +1,32 @@
-<div class="diagramsPanel">
-  <div #paletteDiv class="paletteDiv"></div>
-  <div #diagramDiv class="diagramDiv"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4 my-auto">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-warning">Components Palette</h3>
+        </div>
+        <div class="card-body">
+          <div class="component">
+            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close"
+              (click)="addNewComponent()">
+              <i class="tim-icons icon-simple-add"></i>
+            </button>
+            <span class="text-danger font-weight-bold my-auto"> DATA INPUT </span>
+          </div>
+          <div class="component" style="background-color: beige">
+            <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close"
+              (click)="addNewComponent2()">
+              <i class="tim-icons icon-simple-add"></i>
+            </button>
+            <span class="text-danger font-weight-bold my-auto"> FEATURE ENGINEERING </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8 my-auto">
+      <div class="diagramsPanel">
+        <div id="cy"></div>
+      </div>
+    </div>
+  </div>
 </div>

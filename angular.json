@@ -32,7 +32,11 @@
               "src/assets/scss/black-dashboard.scss",
               "src/assets/css/nucleo-icons.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/cytoscape/dist/cytoscape.min.js",
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/qtip2/dist/jquery.qtip.min.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
