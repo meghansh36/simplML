@@ -11,6 +11,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { PlaygroundComponent } from 'src/app/pages/playground/playground.component';
 import { UtilityModule } from 'src/app/utility/utility.module';
 import { DesignPipelineComponent } from 'src/app/pages/design-pipeline/design-pipeline.component';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { CommandPalleteComponent } from 'src/app/components/command-pallete/command-pallete.component';
 
 @NgModule({
   imports: [
@@ -20,12 +22,14 @@ import { DesignPipelineComponent } from 'src/app/pages/design-pipeline/design-pi
     HttpClientModule,
     NgbModule,
     UtilityModule,
-
+    ComponentsModule
   ],
   declarations: [
     DashboardComponent,
     PlaygroundComponent,
-    DesignPipelineComponent
-  ]
+    DesignPipelineComponent,
+    CommandPalleteComponent
+  ],
+  providers: []
 })
 export class AdminLayoutModule { }

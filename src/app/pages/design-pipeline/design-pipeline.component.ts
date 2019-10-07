@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { RoutingService } from 'src/app/services/routing-service.service';
 // import * as go from 'gojs';
 
 declare var require: any;
@@ -14,106 +15,97 @@ const ctxmenu = require('cytoscape-cxtmenu');
 })
 export class DesignPipelineComponent implements OnInit {
 
-  // private diagram: go.Diagram = new go.Diagram();
-  // private palette: go.Palette = new go.Palette();
-
-  // @ViewChild('diagramDiv', { static: true })
-  // private diagramRef: ElementRef;
-
-  // @ViewChild('paletteDiv', { static: true })
-  // private paletteRef: ElementRef;
-
-  // @Input()
-  // get model(): go.Model { return this.diagram.model; }
-  // set model(val: go.Model) { this.diagram.model = val; }
-
-  // @Output()
-  // nodeSelected = new EventEmitter<go.Node | null>();
-
-  // @Output()
-  // modelChanged = new EventEmitter<go.ChangedEvent>();
-
   cy: any;
   eh: any;
   edgeBendInstance: any;
   contextInstance: any;
 
 
-  constructor() {
+  constructor(private routingService: RoutingService) {}
+    ngOnInit() {
 
-    this.cy = cytoscape({
+      this.routingService.showSideBarEmitter.next(false);
+
+      this.cy = cytoscape({
         container: document.querySelector('#cy'),
-        elements: [],
+        elements: [ // flat array of nodes and edges
+          { // node n1
+            group: 'nodes', // 'nodes' for a node, 'edges' for an edge
+            // NB the group field can be automatically inferred for you but specifying it
+            // gives you nice debug messages if you mis-init elements
+      
+      
+            data: { // element data (put json serialisable dev data here)
+              id: 'n1', // mandatory (string) id for each element, assigned automatically on undefined
+              parent: 'nparent', // indicates the compound node parent id; not defined => no parent
+              // (`parent` can be effectively changed by `eles.move()`)
+            },
+      
+            // scratchpad data (usually temp or nonserialisable data)
+            scratch: {
+              _foo: 'bar' // app fields prefixed by underscore; extension fields unprefixed
+            },
+      
+            position: { // the model position of the node (optional on init, mandatory after)
+              x: 100,
+              y: 100
+            },
+      
+            selected: false, // whether the element is selected (default false)
+      
+            selectable: true, // whether the selection state is mutable (default true)
+      
+            locked: false, // when locked a node's position is immutable (default false)
+      
+            grabbable: true, // whether the node can be grabbed and moved by the user
+      
+            pannable: false, // whether dragging the node causes panning instead of grabbing
+      
+            classes: ['foo', 'bar'] // an array (or a space separated string) of class names that the element has
+          },
+      
+          { // node n2
+            data: { id: 'n2' },
+            renderedPosition: { x: 200, y: 200 } // can alternatively specify position in rendered on-screen pixels
+          },
+      
+          { // node n3
+            data: { id: 'n3', parent: 'nparent' },
+            position: { x: 123, y: 234 }
+          },
+      
+          { // node nparent
+            data: { id: 'nparent' }
+          },
+      
+          { // edge e1
+            data: {
+              id: 'e1',
+              // inferred as an edge because `source` and `target` are specified:
+              source: 'n1', // the source node id (edge comes from this node)
+              target: 'n2'  // the target node id (edge goes to this node)
+              // (`source` and `target` can be effectively changed by `eles.move()`)
+            },
+      
+            pannable: true // whether dragging on the edge causes panning
+          }
+        ],
         'minZoom': 0.6,
         'maxZoom': 1.3,
         layout: {
           name: 'preset'
-        }
+        },
+      
+        // so we can see the ids
+        style: [
+          {
+            selector: 'node',
+            style: {
+              'label': 'data(id)'
+            }
+          }
+        ]
       });
-  }
-    ngOnInit() {}
-
-
-  //   const $ = go.GraphObject.make;
-  //   // (go as any).licenseKey = "..."
-  //   this.diagram = new go.Diagram();
-  //   this.diagram.initialContentAlignment = go.Spot.Center;
-  //   this.diagram.allowDrop = true;
-  //   this.diagram.undoManager.isEnabled = true;
-  //   this.diagram.addDiagramListener("ChangedSelection",
-  //     e => {
-  //       const node = e.diagram.selection.first();
-  //       this.nodeSelected.emit(node instanceof go.Node ? node : null);
-  //     });
-  //   this.diagram.addModelChangedListener(e => e.isTransactionFinished && this.modelChanged.emit(e));
-
-  //   this.diagram.nodeTemplate =
-  //     $(go.Node, "Auto",
-  //       {
-  //         click: (e, node: go.Node) => { console.log('clicked'); }
-  //       },
-  //       new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-  //       $(go.Shape,
-  //         {
-  //           fill: "white", strokeWidth: 0,
-  //           portId: "", cursor: "pointer",
-  //           // allow many kinds of links
-  //           fromLinkable: true, toLinkable: true,
-  //           fromLinkableSelfNode: true, toLinkableSelfNode: true,
-  //           fromLinkableDuplicates: true, toLinkableDuplicates: true
-  //         },
-  //         new go.Binding("fill", "color")),
-  //       $(go.TextBlock,
-  //         { margin: 8 /*, editable: true*/ },
-  //         new go.Binding("text")/*.makeTwoWay()*/)
-  //     );
-
-  //   this.diagram.linkTemplate =
-  //     $(go.Link,
-  //       // allow relinking
-  //       { relinkableFrom: true, relinkableTo: true },
-  //       $(go.Shape),
-  //       $(go.Shape, { toArrow: "OpenTriangle" })
-  //     );
-  // }
-
-
-
-  // ngOnInit() {
-  //   this.diagram.div = this.diagramRef.nativeElement;
-  // }
-
-
-  // addNewComponent(): void {
-  //   this.diagram.model.addNodeData({
-  //     key: "IN", text: "CSV Input", color: "#7fffd4", stroke: "#4d90fe", description: "pd.read_csv(./path-specified-by-user)"
-  //   });
-  // }
-
-  // addNewComponent2(): void {
-  //   this.diagram.model.addNodeData({
-  //     key: "FE", text: "Feature Engineering", color: "#f5f5dc", stroke: "#4d90fe", description: "normalizer.fit_transform(x,y)"
-  //   });
-  // }
+    }
 
 }

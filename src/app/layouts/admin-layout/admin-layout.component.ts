@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { RoutingService } from 'src/app/services/routing-service.service';
 
 @Component({
   selector: "app-admin-layout",
@@ -7,8 +8,8 @@ import { Component, OnInit } from "@angular/core";
 })
 export class AdminLayoutComponent implements OnInit {
   public sidebarColor: string = "red";
-
-  constructor() {}
+  showSideBar = true;
+  constructor(private routingService: RoutingService) {}
   changeSidebarColor(color){
     var sidebar = document.getElementsByClassName('sidebar')[0];
     var mainPanel = document.getElementsByClassName('main-panel')[0];
@@ -31,5 +32,9 @@ export class AdminLayoutComponent implements OnInit {
       body.classList.remove('white-content');
     }
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.routingService.showSideBarEmitter.subscribe((show: boolean) => {
+      this.showSideBar = show;
+    })
+  }
 }

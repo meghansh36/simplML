@@ -3,6 +3,7 @@ import Chart from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ElectronMsgService } from 'src/app/services/electron.service';
+import { RoutingService } from 'src/app/services/routing-service.service';
 
 /**
  * @author Vasudev Awatramani
@@ -25,10 +26,12 @@ export class DashboardComponent implements OnInit {
   public clicked2: boolean = false;
   public notebookContent;
 
-  constructor(private _httpClient: HttpClient, private _modalService: NgbModal, private _electronService: ElectronMsgService) { }
+  constructor(private _httpClient: HttpClient, private _modalService: NgbModal, private _electronService: ElectronMsgService, private routingService: RoutingService) { }
 
   ngOnInit() {
 
+    this.routingService.navTitleEmitter.next("Dashboard");
+    this.routingService.showSideBarEmitter.next(true);
     var gradientChartOptionsConfigurationWithTooltipRed: any = {
       maintainAspectRatio: false,
       legend: {

@@ -14,7 +14,6 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "./app-routing.module";
 import { ComponentsModule } from "./components/components.module";
 import { AuthenticationComponent } from './pages/authentication/authentication.component';
-import { PlaygroundComponent } from './pages/playground/playground.component';
 
 @NgModule({
   imports: [

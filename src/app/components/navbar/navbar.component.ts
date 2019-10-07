@@ -1,8 +1,9 @@
-import { Component, OnInit, ElementRef, OnDestroy } from "@angular/core";
+import { Component, OnInit, ElementRef, OnDestroy, Input } from "@angular/core";
 import { ROUTES } from "../sidebar/sidebar.component";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { RoutingService } from 'src/app/services/routing-service.service';
 
 @Component({
   selector: "app-navbar",
@@ -10,12 +11,16 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ["./navbar.component.css"]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+
+  @Input() sideBarShown: boolean;
+
   private listTitles: any[];
   location: Location;
   mobile_menu_visible: any = 0;
   private toggleButton: any;
   private sidebarVisible: boolean;
 
+  navTitle: string;
   public isCollapsed = true;
 
   closeResult: string;
@@ -24,7 +29,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     location: Location,
     private element: ElementRef,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private routingService: RoutingService
   ) {
     this.location = location;
     this.sidebarVisible = false;
@@ -53,6 +59,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.mobile_menu_visible = 0;
       }
     });
+
+    this.routingService.navTitleEmitter.subscribe((title: string) => {
+      this.navTitle = title;
+    })
   }
 
   collapse() {
@@ -159,19 +169,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
-  getTitle() {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    if (titlee.charAt(0) === "#") {
-      titlee = titlee.slice(1);
-    }
+  // getTitle() {
+  //   // var titlee = this.location.prepareExternalUrl(this.location.path());
+  //   // if (titlee.charAt(0) === "#") {
+  //   //   titlee = titlee.slice(1);
+  //   // }
 
-    for (var item = 0; item < this.listTitles.length; item++) {
-      if (this.listTitles[item].path === titlee) {
-        return this.listTitles[item].title;
-      }
-    }
-    return "Dashboard";
-  }
+  //   // for (var item = 0; item < this.listTitles.length; item++) {
+  //   //   if (this.listTitles[item].path === titlee) {
+  //   //     return this.listTitles[item].title;
+  //   //   }
+  //   // }
+  //   return this.navTitle;
+  // }
 
   open(content) {
     this.modalService.open(content, {windowClass: 'modal-search'}).result.then((result) => {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RoutingService } from 'src/app/services/routing-service.service';
 
 
 @Component({
@@ -9,12 +10,14 @@ import { Component, OnInit } from '@angular/core';
 export class PlaygroundComponent implements OnInit {
 
   public showPipelineDesigner: boolean;
-  ngOnInit(): void {
-  }
-
-  constructor() {
+  constructor(private routingServie: RoutingService) {
     this.showPipelineDesigner = false;
   }
+
+  ngOnInit(): void {
+    this.routingServie.navTitleEmitter.next("Playground");
+  }
+
 
   buildPlayground() {
     this.showPipelineDesigner = true;
