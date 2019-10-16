@@ -7,6 +7,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommandPalleteComponent implements OnInit {
 
+  dataInputOptions = [
+    {
+      name: 'Input CSV'
+    }, 
+    {
+      name: 'Input JSON'
+    },
+    {
+      name: 'Input HTML'
+    },
+    {
+      name: 'Input Excel'
+    }
+  ];
+
+  dataProcessingOptions = [
+    {
+      name: "Fill Missing Values"
+    },
+    {
+      name: "Drop Columns"
+    },
+    {
+      name: "Min-Max Scaling"
+    },
+    {
+      name: "Standardization"
+    },
+    {
+      name: "One Hot Encoding"
+    }, 
+    {
+      name: "Min-Max Scaling"
+    }
+  ]
+
+  
   constructor() { }
 
   ngOnInit() {

@@ -5,7 +5,7 @@
   "main": "electron/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "ng build --watch --base-href ./",
+    "build": "ng build --watch",
     "electron": "./node_modules/.bin/electron .",
     "electron-build": "ng build --prod --base-href ./ && ./node_modules/.bin/electron ."
   },
@@ -32,6 +32,7 @@
     "cytoscape-edgehandles": "^3.6.0",
     "gojs": "^2.0.17",
     "jquery": "^3.4.1",
+    "ng-drag-drop": "^5.0.0",
     "ng-lottie": "^0.3.2",
     "ngx-electron": "^2.1.1",
     "ngx-toastr": "10.0.4",

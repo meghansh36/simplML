@@ -1,8 +1,10 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
 const process_handler = require('./cpHandler');
 let win;
 
-function createWindow () {
+async function createWindow () {
+  
+  
   // Create the browser window.
   win = new BrowserWindow({
     width: 1300, 
@@ -12,7 +14,15 @@ function createWindow () {
       nodeIntegration: true,
     }
   })
+  
+  globalShortcut.register('CommandOrControl+R', () => {
+    win.loadURL(`file://${__dirname}/../dist/index.html`)
+  });
 
+
+  globalShortcut.register('F5', () => {
+    win.loadURL(`file://${__dirname}/../dist/index.html`)
+  });
 
   win.loadURL(`file://${__dirname}/../dist/index.html`)
   win.maximize()

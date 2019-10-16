@@ -6,6 +6,7 @@ import { FormsModule } from "@angular/forms";
 
 import { AdminLayoutRoutes } from "./admin-layout.routing";
 import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
+import { NgDragDropModule } from 'ng-drag-drop';
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { PlaygroundComponent } from 'src/app/pages/playground/playground.component';
@@ -22,7 +23,8 @@ import { CommandPalleteComponent } from 'src/app/components/command-pallete/comm
     HttpClientModule,
     NgbModule,
     UtilityModule,
-    ComponentsModule
+    ComponentsModule,
+    NgDragDropModule.forRoot()
   ],
   declarations: [
     DashboardComponent,

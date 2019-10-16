@@ -10,7 +10,6 @@ import { AppComponent } from "./app.component";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-
 import { AppRoutingModule } from "./app-routing.module";
 import { ComponentsModule } from "./components/components.module";
 import { AuthenticationComponent } from './pages/authentication/authentication.component';
@@ -25,7 +24,8 @@ import { AuthenticationComponent } from './pages/authentication/authentication.c
     RouterModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
-    NgxElectronModule
+    NgxElectronModule,
+
   ],
   declarations: [AppComponent, AdminLayoutComponent,AuthenticationComponent],
   providers: [],
