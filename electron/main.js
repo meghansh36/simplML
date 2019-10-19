@@ -57,7 +57,6 @@ ipcMain.on('fetch-preview', async (event, filename) => {
 
 /* Import Data - CSV */
 function data_csv(node_data) {
-  
   let cell = {
     "cell_type": "code",
     "execution_count": null,
@@ -116,17 +115,15 @@ function data_excel(node_data) {
     "metadata": {},
     "outputs": [],
     "source": [
-        "df = pd.read_excel('" + node_data.path +"')\n",
-        "X = df.iloc[:,:-1].values\n",
-        "y = df.iloc[:, -1].values\n"
+        "df = pd.read_excel('" + node_data.path +"')\n"
     ]
   };
   return cell;
 }
 
 
-/* Processing - FillNa */
-function processing_fillna(node_data) {
+/* Transforming - FillNa */
+function transforming_fillna(node_data) {
 
   replace_with = (node_data.replace_with) ? ("\'" + node_data.replace_with + "\'") : (0) //Either 0 or string
   method = (node_data.method) ? ("\'" + node_data.method + "\'") : ("None")  //Either none or string
@@ -138,15 +135,14 @@ function processing_fillna(node_data) {
     "metadata": {},
     "outputs": [],
     "source": [
-        "X.fillna("+ replace_with +", method="+method+", inplace=True, limit="+limit+")\n",
-        "Y.fillna("+ replace_with +", method="+method+", inplace=True, limit="+limit+")\n",
+        "df.fillna("+ replace_with +", method="+method+", inplace=True, limit="+limit+")\n",
     ]
   };
   return cell;
 }
 
-/* Processing - DropNa */
-function processing_drop(node_data) {
+/* Transforming - DropNa */
+function transforming_drop(node_data) {
 
   axis = (node_data.axis) ? (node_data.axis) : (0) //Always a number
   how = (node_data.how) ? ("\'" + node_data.how + "\'") : ("\'any\'") //Always a string
@@ -157,8 +153,24 @@ function processing_drop(node_data) {
     "metadata": {},
     "outputs": [],
     "source": [
-        "X.dropna(axis="+ axis +", how="+ how +", inplace=True)\n",
-        "Y.dropna(axis="+ axis +", how="+ how +", inplace=True)\n",
+        "df.dropna(axis="+ axis +", how="+ how +", inplace=True)\n",
+    ]
+  };
+  return cell;
+}
+
+/* Train Test Split */ 
+function train_test_split() {
+
+  let cell = {
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "X = df.iloc[:,:-1].values\n",
+        "y = df.iloc[:, -1].values\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state = 0)\n",
     ]
   };
   return cell;
@@ -173,8 +185,8 @@ function processing_standardize(node_data) {
     "outputs": [],
     "source": [
         "sc = preprocessing.StandardScaler()\n",
-        "X = sc.fit_transform(X)\n",
-        "Y = sc.fit_transform(Y)\n"
+        "X_train = sc.fit_transform(X_train)\n",
+        "X_test = sc.fit_transform(X_test)\n",
     ]
   };
   return cell;
@@ -189,8 +201,8 @@ function processing_scaling(node_data) {
     "outputs": [],
     "source": [
         "mm_scaler = preprocessing.MinMaxScaler()\n",
-        "X = mm_scaler.fit_transform(X)\n",
-        "Y = mm_scaler.fit_transform(Y)\n",
+        "X_train = mm_scaler.fit_transform(X_train)\n",
+        "X_test = mm_scaler.fit_transform(X_test)\n",
     ]
   };
   return cell;
@@ -208,23 +220,8 @@ function processing_ohe(node_data) {
     "outputs": [],
     "source": [
         "onehotencoder = preprocessing.OneHotEncoder(categorical_features = "+categorical_features+")\n",
-        "X = onehotencoder.fit_transform(X).to_array()\n",
-        "Y = onehotencoder.fit_transform(Y).to_array()\n",
-    ]
-  };
-  return cell;
-}
-
-/* Train Test Split */ 
-function train_test_split() {
-
-  let cell = {
-    "cell_type": "code",
-    "execution_count": null,
-    "metadata": {},
-    "outputs": [],
-    "source": [
-        "X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.20, random_state = 0)\n",
+        "X_train = onehotencoder.fit_transform(X_train).to_array()\n",
+        "X_test = onehotencoder.fit_transform(X_test).to_array()\n",
     ]
   };
   return cell;
@@ -234,7 +231,7 @@ function train_test_split() {
 function learner_RF(node_data) {
 
   n_estimators = (node_data.n_estimators) ? (node_data.n_estimators) : (10) //Always number
-  criterion = (node_data.criterion) ? ("\'" + node_data.criterion + "\'") : ("gini") //Always string
+  criterion = (node_data.criterion) ? ("\'" + node_data.criterion + "\'") : ("\'gini\'") //Always string
   random_state = (node_data.random_state) ? (node_data.random_state) : ("None") //Either number or none
 
   let cell = {
@@ -280,7 +277,7 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
 
     if(type == "start" || type == "end") return;
 
-    if(node.parentCategory == "learner") {
+    if(node.data.parentCategory == "processing") {
       let new_cell = train_test_split()
       ipy["cells"].push(new_cell)
     }
