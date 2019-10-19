@@ -132,10 +132,10 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
       // traverse the graoh first and check use depth first search
       let orderedNodes  = this.DFS();
       const modalRef = this.modalService.open(LoadingComponent);
-      // let loaded = this.electronService.generatePythonCode(orderedNodes);
-      // if (loaded) {
-      //   modalRef.close();
-      // }
+      let loaded = this.electronService.generatePythonCode(orderedNodes);
+      if (loaded) {
+        modalRef.close();
+      }
     }
 
     openDataForm() {
