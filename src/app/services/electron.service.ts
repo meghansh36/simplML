@@ -6,10 +6,14 @@ import { ElectronService } from 'ngx-electron';
 })
 export class ElectronMsgService {
 
-  constructor(private _electronService: ElectronService) { }
+  constructor(private _electronService: ElectronService) {}
 
   fetchPreview(filename) {
     console.log('got here')
     this._electronService.ipcRenderer.send('fetch-preview', filename)
+  }
+
+  generatePythonCode(items: Array<object>) {
+    this._electronService.ipcRenderer.send('generate-python-code', items);
   }
 }

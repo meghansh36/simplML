@@ -51,3 +51,7 @@ ipcMain.on('fetch-preview', async (event, filename) => {
     previewWindow = null;
   });
 })
+
+ipcMain.on('generate-python-code', async (event, nodes) => {
+ 
+})

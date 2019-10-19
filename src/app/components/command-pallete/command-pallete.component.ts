@@ -9,37 +9,45 @@ export class CommandPalleteComponent implements OnInit {
 
   dataInputOptions = [
     {
-      name: 'Input CSV'
+      name: 'Input CSV',
+      id: "data_csv"
     }, 
     {
-      name: 'Input JSON'
+      name: 'Input JSON',
+      id: "data_json"
     },
     {
-      name: 'Input HTML'
+      name: 'Input HTML',
+      id: "data_html"
     },
     {
-      name: 'Input Excel'
+      name: 'Input Excel',
+      id: "data_excel"
     }
   ];
 
   dataProcessingOptions = [
     {
-      name: "Fill Missing Values"
+      name: "Fill Missing Values",
+      id: "processing_fillna"
     },
     {
-      name: "Drop Columns"
+      name: "Drop Columns",
+      id: "processing_drop"
+
     },
     {
-      name: "Min-Max Scaling"
+      name: "Min-Max Scaling",
+      id: "processing_scaling"
+
     },
     {
-      name: "Standardization"
+      name: "Standardization",
+      id: "processing_standardize"
     },
     {
-      name: "One Hot Encoding"
-    }, 
-    {
-      name: "Min-Max Scaling"
+      name: "One Hot Encoding",
+      id: "processing_ohe"
     }
   ]
 
