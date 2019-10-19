@@ -15,6 +15,7 @@ import { DesignPipelineComponent } from 'src/app/pages/design-pipeline/design-pi
 import { ComponentsModule } from 'src/app/components/components.module';
 import { CommandPalleteComponent } from 'src/app/components/command-pallete/command-pallete.component';
 import { InputformComponent } from 'src/app/components/inputform/inputform.component';
+import { LoadingComponent } from 'src/app/components/loading/loading.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,6 @@ import { InputformComponent } from 'src/app/components/inputform/inputform.compo
     CommandPalleteComponent
   ],
   providers: [],
-  entryComponents: [InputformComponent]
+  entryComponents: [InputformComponent, LoadingComponent]
 })
 export class AdminLayoutModule { }
