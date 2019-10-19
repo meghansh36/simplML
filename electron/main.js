@@ -314,6 +314,8 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
   previewWindow.on("closed", function() {
     previewWindow = null;
   });
+
+  event.returnValue = true;
 })
 
 ipcMain.on('open-browse-dialog', async (event) => {
