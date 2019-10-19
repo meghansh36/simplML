@@ -63,9 +63,7 @@ function data_csv(node_data) {
     "metadata": {},
     "outputs": [],
     "source": [
-        "df = pd.read_csv('" + node_data.path +"')\n",
-        "X = df.iloc[:,:-1].values\n",
-        "y = df.iloc[:, -1].values\n"
+        "df = pd.read_csv('" + node_data.path +"')\n"
     ]
   };
   return cell;
@@ -81,8 +79,6 @@ function data_json(node_data) {
     "outputs": [],
     "source": [
         "df = pd.io.json.json_normalize('" + node_data.path +"')\n",
-        "X = df.iloc[:,:-1].values\n",
-        "y = df.iloc[:, -1].values\n"
     ]
   };
 
@@ -98,9 +94,7 @@ function data_html(node_data) {
     "metadata": {},
     "outputs": [],
     "source": [
-        "df = pd.read_html('" + node_data.path +"')[0]\n",
-        "X = df.iloc[:,:-1].values\n",
-        "y = df.iloc[:, -1].values\n"
+        "df = pd.read_html('" + node_data.path +"')[0]\n"
     ]
   };
   return cell;
@@ -159,6 +153,21 @@ function transforming_drop(node_data) {
   return cell;
 }
 
+/* XY Split */
+function XY_split() {
+  let cell = {
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "X = df.iloc[:,:-1].values\n",
+        "y = df.iloc[:, -1].values\n",
+    ]
+  };
+  return cell;
+}
+
 /* Train Test Split */ 
 function train_test_split() {
 
@@ -168,8 +177,6 @@ function train_test_split() {
     "metadata": {},
     "outputs": [],
     "source": [
-        "X = df.iloc[:,:-1].values\n",
-        "y = df.iloc[:, -1].values\n",
         "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state = 0)\n",
     ]
   };
@@ -185,8 +192,7 @@ function processing_standardize(node_data) {
     "outputs": [],
     "source": [
         "sc = preprocessing.StandardScaler()\n",
-        "X_train = sc.fit_transform(X_train)\n",
-        "X_test = sc.fit_transform(X_test)\n",
+        "X = sc.fit_transform(X)\n",
     ]
   };
   return cell;
@@ -201,8 +207,7 @@ function processing_scaling(node_data) {
     "outputs": [],
     "source": [
         "mm_scaler = preprocessing.MinMaxScaler()\n",
-        "X_train = mm_scaler.fit_transform(X_train)\n",
-        "X_test = mm_scaler.fit_transform(X_test)\n",
+        "X = mm_scaler.fit_transform(X)\n",
     ]
   };
   return cell;
@@ -211,7 +216,7 @@ function processing_scaling(node_data) {
 /* Processing - One hot encoding */
 function processing_ohe(node_data) {
 
-  categorical_features = (node_data.categorical_features) ? (node_data.categorical_features) : ("all")
+  categorical_features = (node_data.categorical_features) ? (node_data.categorical_features) : ("\'all\'")
 
   let cell = {
     "cell_type": "code",
@@ -220,8 +225,7 @@ function processing_ohe(node_data) {
     "outputs": [],
     "source": [
         "onehotencoder = preprocessing.OneHotEncoder(categorical_features = "+categorical_features+")\n",
-        "X_train = onehotencoder.fit_transform(X_train).to_array()\n",
-        "X_test = onehotencoder.fit_transform(X_test).to_array()\n",
+        "X = onehotencoder.fit_transform(X).toarray()\n",
     ]
   };
   return cell;
@@ -260,7 +264,7 @@ function learner_SVM(node_data) {
     "metadata": {},
     "outputs": [],
     "source": [
-        "classifier = SVC(kernel ="+ kernel +", random_state = "+ random_state +")",
+        "classifier = SVC(kernel ="+ kernel +", random_state = "+ random_state +")\n",
         "classifier.fit(X_train, y_train)\n",
         "y_pred = classifier.predict(X_test)\n",
     ]
@@ -271,15 +275,26 @@ function learner_SVM(node_data) {
 ipcMain.on('generate-python-code', async (event, nodes) => {
   
   let ipy = JSON.parse(fs.readFileSync("./ipynb-files/initial.ipynb", "utf-8"))
+  let split_in_xy = false
+  let split_in_train_test = false
 
   nodes.forEach(node => {
     let type = node.id
 
     if(type == "start" || type == "end") return;
 
-    if(node.data.parentCategory == "processing") {
+    //Split in XY
+    if(node.data.parentCategory == "processing" && !split_in_xy) {
+      let new_cell = XY_split()
+      ipy["cells"].push(new_cell)
+      split_in_xy = true
+    }
+
+    //Split in train/test
+    if(node.data.parentCategory == "learner" && !split_in_train_test) {
       let new_cell = train_test_split()
       ipy["cells"].push(new_cell)
+      split_in_train_test = true
     }
 
     let new_cell = eval(type)(node.data)  //Node id should match the function name
