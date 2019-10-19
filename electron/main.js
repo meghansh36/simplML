@@ -1,6 +1,8 @@
-const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
+const { app, BrowserWindow, ipcMain, globalShortcut, dialog } = require('electron')
 const process_handler = require('./cpHandler');
 const fs = require('fs')
+const os = require('os')
+const path = require('path')
 let win;
 
 async function createWindow () {
@@ -300,6 +302,17 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
   previewWindow.on("closed", function() {
     previewWindow = null;
   });
-  
+})
 
+ipcMain.on('open-browse-dialog', async (event) => {
+  console.log('here')
+  let paths = dialog.showOpenDialogSync({
+    defaultPath: `${os.homedir()}${path.sep}Desktop`,
+  })
+
+  console.log(paths);
+  if(paths.length > 0)
+    event.returnValue = {path: paths[0], sep: path.sep};
+  else
+    event.returnValue = undefined;
 })
