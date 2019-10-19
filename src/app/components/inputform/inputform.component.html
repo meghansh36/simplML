@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <i class=" tim-icons icon-simple-remove" (click)="activeModal.dismiss('Cross click')"> </i>
+    
+  </div>
+  <form>
+    <div class="modal-body">
+      <div class="container">
+        <div class="form-group">
+          <label for="">File Path</label>
+          <div>
+            <input placeholder="Choose File" [formControl]="path" required class="form-control" style=" width: 90%;
+            display: inline-block;
+            margin-right: 20px;">
+            <i class=" tim-icons icon-tv-2" (click)="openBrowse()"> </i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" (click)="submit()">
+        Submit
+      </button>
+    </div>
+  </form>

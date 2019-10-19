@@ -16,4 +16,8 @@ export class ElectronMsgService {
   generatePythonCode(items: Array<object>) {
     this._electronService.ipcRenderer.send('generate-python-code', items);
   }
+
+  openBrowseDialog() {
+    // this._electronService
+  }
 }

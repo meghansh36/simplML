@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { RoutingService } from 'src/app/services/routing-service.service';
 import { NgControlStatus } from '@angular/forms';
 import { GraphService } from 'src/app/services/graph.service';
 import { ElectronMsgService } from 'src/app/services/electron.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { InputformComponent } from 'src/app/components/inputform/inputform.component';
 // import * as go from 'gojs';
 
 declare var require: any;
@@ -16,7 +18,7 @@ const ctxmenu = require('cytoscape-cxtmenu');
   templateUrl: './design-pipeline.component.html',
   styleUrls: ['./design-pipeline.component.scss']
 })
-export class DesignPipelineComponent implements OnInit {
+export class DesignPipelineComponent implements OnInit, AfterViewInit {
 
   cy: any;
   eh: any;
@@ -24,7 +26,7 @@ export class DesignPipelineComponent implements OnInit {
   contextInstance: any;
 
 
-  constructor(private routingService: RoutingService, private graphService: GraphService, private electronService: ElectronMsgService) {}
+  constructor(private routingService: RoutingService, private graphService: GraphService, private electronService: ElectronMsgService, private modalService: NgbModal) {}
     ngOnInit() {
 
       this.routingService.showSideBarEmitter.next(false);
@@ -54,7 +56,16 @@ export class DesignPipelineComponent implements OnInit {
           {
             selector: 'node[name]',
             style: {
-              'label': 'data(name)'
+              'background-color': '#1e1e2f',
+              'border-style': 'solid',
+              'border-width': '1px',
+              'border-color': 'data(borderColor)',
+              'shape': 'round-rectangle',
+              'label': 'data(name)',
+              'color': 'white',
+              'text-valign': 'center',
+              'width': 'data(width)',
+              'height': 'data(height)'
             }
           }, 
           {
@@ -80,15 +91,21 @@ export class DesignPipelineComponent implements OnInit {
         ]
       });
     let eh = this.cy.edgehandles(this.graphService.edgeHandleSettings)
+    let cxt = this.cy.cxtmenu(this.graphService.ctxSettings)
+    }
+
+    ngAfterViewInit() {
+      this.graphService.setDesignPipelineObject(this);
     }
 
     dropComplete(e) {
       const xpos = e.nativeEvent.offsetX;
       const ypos = e.nativeEvent.offsetY;
-      const data = e.dragData
+      const dragData = e.dragData
+      console.log(dragData)
       this.cy.add({
         group: 'nodes',
-        data: { name: data.name, id: data.id},
+        data: { ...dragData, width: 200, height: 50},
         renderedPosition: { x: xpos, y: ypos }
       })
     }
@@ -113,7 +130,18 @@ export class DesignPipelineComponent implements OnInit {
     generatePythonCode() {
       // traverse the graoh first and check use depth first search
       let orderedNodes  = this.DFS();
-      this.electronService
+      this.electronService.generatePythonCode(orderedNodes);
+    }
+
+    openDataForm() {
+      const modalRef = this.modalService.open(InputformComponent);
+      modalRef.componentInstance.id = 10; // should be the id
+
+      modalRef.result.then((result) => {
+        console.log(result);
+      }).catch((error) => {
+        console.log(error);
+      });
     }
 
 
