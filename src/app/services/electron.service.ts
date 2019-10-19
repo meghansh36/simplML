@@ -18,6 +18,6 @@ export class ElectronMsgService {
   }
 
   openBrowseDialog() {
-    // this._electronService
+    // this._electronService.ipcRenderer
   }
 }
