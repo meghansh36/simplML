@@ -138,7 +138,8 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
       modalRef.componentInstance.id = 10; // should be the id
 
       modalRef.result.then((result) => {
-        console.log(result);
+          this.cy.$("node[parentCategory = 'data']").data('path', result);
+          console.log(this.cy.$("node[parentCategory = 'data']").data());
       }).catch((error) => {
         console.log(error);
       });
