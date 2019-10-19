@@ -21,6 +21,12 @@
       </div>
     </div>
     <div class="col-sm-9 my-auto">
+      <div class="commandButtons">
+        <button class="btn btn-warning">Optimize</button>
+        <button class="btn btn-danger">Advanced</button>
+        <button class="btn btn-light" (click)="generatePythonCode()">View</button>
+        <button class="btn btn-success">Run</button>
+      </div>
       <div class="diagramsPanel">
         <div id="cy" style="width: 100%; height: 600px; display: block; border: 1px solid orange" droppable (onDrop)="dropComplete($event)"></div>
       </div>
