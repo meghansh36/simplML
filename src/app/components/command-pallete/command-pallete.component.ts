@@ -37,13 +37,13 @@ export class CommandPalleteComponent implements OnInit {
   transformingOptions = [
     {
       name: "Fill Missing Values",
-      id: "processing_fillna",
+      id: "transforming_fillna",
       borderColor: '#FFD0B9',
       parentCategory: 'transforming'
     },
     {
       name: "Drop NA",
-      id: "processing_drop",
+      id: "transforming_drop",
       borderColor: '#FFD0B9',
       parentCategory: 'transforming'
     },
