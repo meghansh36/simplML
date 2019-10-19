@@ -21,5 +21,5 @@ async function getPreview(filename) {
 }
 
 module.exports = {
-    getPreview
+    getPreview,
 }

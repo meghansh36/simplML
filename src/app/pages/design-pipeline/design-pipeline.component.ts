@@ -113,7 +113,7 @@ export class DesignPipelineComponent implements OnInit {
     generatePythonCode() {
       // traverse the graoh first and check use depth first search
       let orderedNodes  = this.DFS();
-      this.electronService
+      this.electronService.generatePythonCode(orderedNodes);
     }
 
 
