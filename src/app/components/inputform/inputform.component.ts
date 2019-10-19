@@ -11,20 +11,24 @@ import { ElectronMsgService } from 'src/app/services/electron.service';
 export class InputformComponent implements OnInit {
 
   path = new FormControl('', [Validators.required]);
+  completePath: string;
   constructor( public activeModal: NgbActiveModal, private electronService: ElectronMsgService) { }
 
   ngOnInit() {}
 
   openBrowse() {
     let {path, sep} = this.electronService.openBrowseDialog();
-    console.log(path, sep)
-    let filename = path.slice(path.lastIndexOf(sep)+1);
-    this.path.setValue(filename);
+    if(path) {
+      this.completePath = path;
+      console.log(path, sep)
+      let filename = path.slice(path.lastIndexOf(sep)+1);
+      this.path.setValue(filename);
+    }
   }
 
   submit() {
     if(this.path.value)
-      this.activeModal.close(this.path.value);
+      this.activeModal.close(this.completePath);
   }
 
 }

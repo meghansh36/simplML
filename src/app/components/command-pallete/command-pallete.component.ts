@@ -37,25 +37,33 @@ export class CommandPalleteComponent implements OnInit {
   dataProcessingOptions = [
     {
       name: "Fill Missing Values",
-      id: "processing_fillna"
+      id: "processing_fillna",
+      borderColor: '#BF8FCC',
+      parentCategory: 'processing'
     },
     {
-      name: "Drop Columns",
-      id: "processing_drop"
-
+      name: "Drop NA",
+      id: "processing_drop",
+      borderColor: '#BF8FCC',
+      parentCategory: 'processing'
     },
     {
       name: "Min-Max Scaling",
-      id: "processing_scaling"
-
+      id: "processing_scaling",
+      borderColor: '#BF8FCC',
+      parentCategory: 'processing'
     },
     {
       name: "Standardization",
-      id: "processing_standardize"
+      id: "processing_standardize",
+      borderColor: '#BF8FCC',
+      parentCategory: 'processing'
     },
     {
       name: "One Hot Encoding",
-      id: "processing_ohe"
+      id: "processing_ohe",
+      borderColor: '#BF8FCC',
+      parentCategory: 'processing'
     }
   ]
 
@@ -63,23 +71,32 @@ export class CommandPalleteComponent implements OnInit {
     {
       name: "Regression",
       id: "learner_regression",
-
+      borderColor: '#FF5349',
+      parentCategory: 'learner'
     },
     {
       name: "Support Vector Machine",
-      id: "learner_svm"
+      id: "learner_SVM",
+      borderColor: '#FF5349',
+      parentCategory: 'learner'
     },
     {
       name: "Random Forest",
-      id: "learner_RF"
+      id: "learner_RF",
+      borderColor: '#FF5349',
+      parentCategory: 'learner'
     },
     {
       name: "Preceptrons",
-      id: "learner_perceptron"
+      id: "learner_perceptron",
+      borderColor: '#FF5349',
+      parentCategory: 'learner'
     },
     {
       name: "Clustering",
-      id: "learner_clustering"
+      id: "learner_clustering",
+      borderColor: '#FF5349',
+      parentCategory: 'learner'
     }
   ]
 
