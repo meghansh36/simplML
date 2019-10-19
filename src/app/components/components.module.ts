@@ -8,10 +8,12 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 import { InputformComponent } from './inputform/inputform.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoadingComponent } from './loading/loading.component';
+import { UtilityModule } from '../utility/utility.module';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, NgbModule, FormsModule, ReactiveFormsModule],
-  declarations: [FooterComponent, NavbarComponent, SidebarComponent, InputformComponent],
+  imports: [CommonModule, RouterModule, NgbModule, FormsModule, ReactiveFormsModule, UtilityModule],
+  declarations: [FooterComponent, NavbarComponent, SidebarComponent, InputformComponent, LoadingComponent],
   exports: [FooterComponent, NavbarComponent, SidebarComponent]
 })
 export class ComponentsModule {}

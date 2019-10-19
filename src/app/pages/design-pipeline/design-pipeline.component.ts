@@ -5,6 +5,7 @@ import { GraphService } from 'src/app/services/graph.service';
 import { ElectronMsgService } from 'src/app/services/electron.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InputformComponent } from 'src/app/components/inputform/inputform.component';
+import { LoadingComponent } from 'src/app/components/loading/loading.component';
 // import * as go from 'gojs';
 
 declare var require: any;
@@ -130,7 +131,11 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
     generatePythonCode() {
       // traverse the graoh first and check use depth first search
       let orderedNodes  = this.DFS();
-      this.electronService.generatePythonCode(orderedNodes);
+      const modalRef = this.modalService.open(LoadingComponent);
+      // let loaded = this.electronService.generatePythonCode(orderedNodes);
+      // if (loaded) {
+      //   modalRef.close();
+      // }
     }
 
     openDataForm() {

@@ -34,19 +34,22 @@ export class CommandPalleteComponent implements OnInit {
     }
   ];
 
-  dataProcessingOptions = [
+  transformingOptions = [
     {
       name: "Fill Missing Values",
       id: "processing_fillna",
-      borderColor: '#BF8FCC',
-      parentCategory: 'processing'
+      borderColor: '#FFD0B9',
+      parentCategory: 'transforming'
     },
     {
       name: "Drop NA",
       id: "processing_drop",
-      borderColor: '#BF8FCC',
-      parentCategory: 'processing'
+      borderColor: '#FFD0B9',
+      parentCategory: 'transforming'
     },
+  ]
+
+  dataProcessingOptions = [
     {
       name: "Min-Max Scaling",
       id: "processing_scaling",

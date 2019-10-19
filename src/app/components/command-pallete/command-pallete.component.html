@@ -11,6 +11,16 @@
     </ngb-panel>
     <ngb-panel>
         <ng-template ngbPanelTitle>
+          <span class="text-danger font-weight-bold my-auto"> Data Transformation</span>
+        </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="card" *ngFor="let option of transformingOptions" draggable [dragData]="option">
+          <div class="card-body">{{option.name}}</div>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel>
+        <ng-template ngbPanelTitle>
           <span class="text-danger font-weight-bold my-auto"> Data Processing</span>
         </ng-template>
       <ng-template ngbPanelContent>
