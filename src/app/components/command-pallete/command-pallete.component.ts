@@ -10,19 +10,27 @@ export class CommandPalleteComponent implements OnInit {
   dataInputOptions = [
     {
       name: 'Input CSV',
-      id: "data_csv"
+      id: "data_csv",
+      borderColor: '#00CCCC',
+      parentCategory: 'data'
     }, 
     {
       name: 'Input JSON',
-      id: "data_json"
+      id: "data_json",
+      borderColor: '#00CCCC',
+      parentCategory: 'data'
     },
     {
       name: 'Input HTML',
-      id: "data_html"
+      id: "data_html",
+      borderColor: '#00CCCC',
+      parentCategory: 'data'
     },
     {
       name: 'Input Excel',
-      id: "data_excel"
+      id: "data_excel",
+      borderColor: '#00CCCC',
+      parentCategory: 'data'
     }
   ];
 
@@ -48,6 +56,30 @@ export class CommandPalleteComponent implements OnInit {
     {
       name: "One Hot Encoding",
       id: "processing_ohe"
+    }
+  ]
+
+  learnerOptions = [
+    {
+      name: "Regression",
+      id: "learner_regression",
+
+    },
+    {
+      name: "Support Vector Machine",
+      id: "learner_svm"
+    },
+    {
+      name: "Random Forest",
+      id: "learner_RF"
+    },
+    {
+      name: "Preceptrons",
+      id: "learner_perceptron"
+    },
+    {
+      name: "Clustering",
+      id: "learner_clustering"
     }
   ]
 
