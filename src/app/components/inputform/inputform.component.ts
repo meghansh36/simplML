@@ -16,8 +16,10 @@ export class InputformComponent implements OnInit {
   ngOnInit() {}
 
   openBrowse() {
-    this.electronService.openBrowseDialog();
-    
+    let {path, sep} = this.electronService.openBrowseDialog();
+    console.log(path, sep)
+    let filename = path.slice(path.lastIndexOf(sep)+1);
+    this.path.setValue(filename);
   }
 
   submit() {

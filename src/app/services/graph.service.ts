@@ -103,9 +103,7 @@ export class GraphService {
           content: '<i class="tim-icons icon-settings"></i>', // html/text content to be displayed in the menu
           contentStyle: {}, // css key:value pairs to set the command's css in js if you want
           select: (ele) => { // a function to execute when the command is selected
-            console.log(ele.data())
             if (ele.data().parentCategory === 'data') {
-              console.log('in if')
               this.openDataForm();
             }
           },
@@ -134,7 +132,6 @@ export class GraphService {
   }
 
   openDataForm() {
-    console.log('here')
     this.designPipelineObj.openDataForm()
   }
 }

@@ -18,6 +18,8 @@ export class ElectronMsgService {
   }
 
   openBrowseDialog() {
-    // this._electronService.ipcRenderer
+    let pathObj = this._electronService.ipcRenderer.sendSync('open-browse-dialog')
+    if(pathObj)
+      return pathObj;
   }
 }
