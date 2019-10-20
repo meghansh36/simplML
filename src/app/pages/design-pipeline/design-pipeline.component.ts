@@ -8,6 +8,7 @@ import { InputformComponent } from 'src/app/components/inputform/inputform.compo
 import { LoadingComponent } from 'src/app/components/loading/loading.component';
 import {take} from 'rxjs/operators'
 import { OutputComponent } from 'src/app/components/output/output.component';
+import { TableComponent } from 'src/app/components/table/table.component';
 
 const introjs = require('../../../../node_modules/intro.js/intro')
 // import * as go from 'gojs';
@@ -29,7 +30,8 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
   eh: any;
   edgeBendInstance: any;
   contextInstance: any;
-
+  csvData: any;
+  showViewDataButton = false;
 
   constructor(private routingService: RoutingService, private graphService: GraphService, private electronService: ElectronMsgService, private modalService: NgbModal) {}
     ngOnInit() {
@@ -41,12 +43,12 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
         elements: [
         {
           group: 'nodes',
-          data: { name: "Start", id: "start"},
+          data: { name: "Start", id: "start", shapes: 'ellipse', borderColor: 'green', height: 60, width: 60},
           position: { x: 100, y: 100 }
         },
         {
           group: 'nodes',
-          data: { name: "End", id: "end"},
+          data: { name: "End", id: "end", shapes: "ellipse", borderColor: 'red', height: 60, width: 60},
           position: { x: 300, y: 100 }
         }
       ],
@@ -65,7 +67,7 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
               'border-style': 'solid',
               'border-width': '1px',
               'border-color': 'data(borderColor)',
-              'shape': 'round-rectangle',
+              'shape': 'data(shapes)',
               'label': 'data(name)',
               'color': 'white',
               'text-valign': 'center',
@@ -77,7 +79,7 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
             selector: 'edge',
             style: {
               "curve-style": 'unbundled-bezier',
-              "control-point-distances": [40, -40],
+              "control-point-distances": [20, -20],
               "control-point-weights": [0.250, 0.75]
             }
           },
@@ -111,7 +113,7 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
       console.log(dragData)
       this.cy.add({
         group: 'nodes',
-        data: { ...dragData, width: 200, height: 50},
+        data: { ...dragData, width: 200, height: 50, shapes: 'round-rectangle'},
         renderedPosition: { x: xpos, y: ypos }
       })
     }
@@ -153,6 +155,9 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
       modalRef.result.then((result) => {
           this.cy.$("node[parentCategory = 'data']").data('path', result);
           console.log(this.cy.$("node[parentCategory = 'data']").data());
+
+          this.csvData = this.electronService.getCSVString(result);
+          this.showViewDataButton = true;
       }).catch((error) => {
         console.log(error);
       });
@@ -160,7 +165,13 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
 
     runCode() {
       let orderedNodes  = this.DFS();
+      const modalRef = this.modalService.open(LoadingComponent);
       this.electronService.runCode(orderedNodes);
+      this.electronService.loaded.pipe(take(1)).subscribe(loaded => {
+        if(loaded) {
+          modalRef.close();
+        }
+      })
       this.electronService.codeOutput.pipe(take(1)).subscribe(output => {
         const modalRef = this.modalService.open(OutputComponent);
         modalRef.componentInstance.passedData = output;
@@ -212,6 +223,11 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
         highlightClass: "customOverlayClass"
         });
         intro.start();
+    }
+
+    viewCSV() {
+      const modalRef = this.modalService.open(TableComponent);
+      modalRef.componentInstance.data = this.csvData;
     }
 
 

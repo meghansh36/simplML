@@ -96,7 +96,12 @@ export class GraphService {
           contentStyle: {}, // css key:value pairs to set the command's css in js if you want
           select: (ele) => { // a function to execute when the command is selected
             if(ele.data().id !== 'start' || ele.data().id !== 'end')
+            {
+              if(ele.data().parentCategory === 'data')
+                this.designPipelineObj.showViewDataButton = false;
               this.designPipelineObj.cy.remove(ele)
+            }
+              
           },
           enabled: true // whether the command is selectable
         },

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { Subject } from 'rxjs';
-
+import { Papa } from 'ngx-papaparse';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +9,7 @@ export class ElectronMsgService {
 
   loaded = new Subject();
   codeOutput = new Subject();
-  constructor(private _electronService: ElectronService) {}
+  constructor(private _electronService: ElectronService, private papa: Papa) {}
 
   fetchPreview(filename) {
     console.log('got here')
@@ -34,8 +34,14 @@ export class ElectronMsgService {
     this._electronService.ipcRenderer.send('run-python-code', items);
 
     this._electronService.ipcRenderer.on('run-python-code-output', (event, output) => {
-      console.log(output);
+      this.loaded.next(true)
       this.codeOutput.next(output);
     })
+  }
+
+  getCSVString(path) {
+    let string = this._electronService.ipcRenderer.sendSync('get-csv-string', path);
+    let parsed = this.papa.parse(string);
+    return parsed.data;
   }
 }

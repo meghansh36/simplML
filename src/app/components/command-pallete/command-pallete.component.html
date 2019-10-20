@@ -4,7 +4,7 @@
         <span class="text-danger font-weight-bold my-auto"> Data Input </span>
       </ng-template>
       <ng-template ngbPanelContent>
-        <div class="card" *ngFor="let option of dataInputOptions" draggable [dragData]="option">
+        <div class="card" *ngFor="let option of dataInputOptions" draggable [dragData]="option" ngbTooltip={{option.tooltipText}}>
           <div class="card-body">{{option.name}}</div>
         </div>
       </ng-template>
@@ -14,7 +14,7 @@
           <span class="text-danger font-weight-bold my-auto"> Data Transformation</span>
         </ng-template>
       <ng-template ngbPanelContent>
-        <div class="card" *ngFor="let option of transformingOptions" draggable [dragData]="option">
+        <div class="card" *ngFor="let option of transformingOptions" draggable [dragData]="option" ngbTooltip={{option.tooltipText}}>
           <div class="card-body">{{option.name}}</div>
         </div>
       </ng-template>
@@ -24,7 +24,7 @@
           <span class="text-danger font-weight-bold my-auto"> Data Processing</span>
         </ng-template>
       <ng-template ngbPanelContent>
-        <div class="card" *ngFor="let option of dataProcessingOptions" draggable [dragData]="option">
+        <div class="card" *ngFor="let option of dataProcessingOptions" draggable [dragData]="option" placement="top" ngbTooltip="khjh">
           <div class="card-body">{{option.name}}</div>
         </div>
       </ng-template>
@@ -39,7 +39,7 @@
             </div>
           </ng-template>
     </ngb-panel>
-    <ngb-panel>
+    <!-- <ngb-panel>
         <ng-template ngbPanelTitle>
           <span class="text-danger font-weight-bold my-auto"> Evaluation</span>
         </ng-template>
@@ -52,7 +52,7 @@
         occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
         labore sustainable VHS.
       </ng-template>
-    </ngb-panel>
+    </ngb-panel> -->
   </ngb-accordion>
 
   <!-- linear-gradient(to right, #27293d, #6C5A77) -->
