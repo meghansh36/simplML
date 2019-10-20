@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 .modal-content {
     background-color: #27293d !important;
+}
 
+.customOverlayClass {
+    background-color: rgba(255,255,255,.12) !important;
+    z-index: 9999999 !important;
 }

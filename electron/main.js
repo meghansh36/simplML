@@ -339,7 +339,7 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
     previewWindow = null;
   });
 
-  event.returnValue = true;
+  event.reply('generate-python-code-success')
 })
 
 ipcMain.on('run-python-code', async (event, nodes) => {
