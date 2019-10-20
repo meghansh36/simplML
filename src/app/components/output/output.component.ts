@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 const introjs = require('../../../../node_modules/intro.js/intro')
 
 @Component({
@@ -9,7 +10,7 @@ const introjs = require('../../../../node_modules/intro.js/intro')
 export class OutputComponent implements OnInit, AfterViewInit {
 
   passedData: any;
-  constructor() { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
   }

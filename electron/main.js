@@ -398,3 +398,8 @@ ipcMain.on('open-browse-dialog', async (event) => {
   else
     event.returnValue = undefined;
 })
+
+ipcMain.on('get-csv-string', async (event, path) => {
+  let content = fs.readFileSync(path, {encoding: 'utf-8'})
+  event.returnValue = content;
+})

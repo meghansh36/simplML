@@ -17,6 +17,7 @@ import { CommandPalleteComponent } from 'src/app/components/command-pallete/comm
 import { InputformComponent } from 'src/app/components/inputform/inputform.component';
 import { LoadingComponent } from 'src/app/components/loading/loading.component';
 import { OutputComponent } from 'src/app/components/output/output.component';
+import { TableComponent } from 'src/app/components/table/table.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,6 @@ import { OutputComponent } from 'src/app/components/output/output.component';
     CommandPalleteComponent
   ],
   providers: [],
-  entryComponents: [InputformComponent, LoadingComponent, OutputComponent]
+  entryComponents: [InputformComponent, LoadingComponent, OutputComponent, TableComponent]
 })
 export class AdminLayoutModule { }
