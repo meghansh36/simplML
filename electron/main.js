@@ -280,10 +280,12 @@ function evaluation_cm() {
     "metadata": {},
     "outputs": [],
     "source": [
-        "print('Accuracy: ', sm.accuracy_score(y_test,y_pred))\n",
-        "print('Precision Score: ', sm.precision_score(y_test,y_pred,average='macro'))\n",
-        "print('F1 Score: ', sm.f1_score(y_test,y_pred,average='macro'))\n",
-        "print('Recall Score: ', sm.recall_score(y_test,y_pred,average='macro'))\n",
+        "accuracy = sm.accuracy_score(y_test,y_pred)\n",
+        "precision = sm.precision_score(y_test,y_pred,average='macro')\n",
+        "f1 = sm.f1_score(y_test,y_pred,average='macro')\n",
+        "recall = sm.recall_score(y_test,y_pred,average='macro')\n",
+        "cm_scores = { 'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1': f1  }\n", 
+        "print(json.dumps(cm_scores))\n",
     ]
   };
   return cell;
@@ -379,6 +381,8 @@ ipcMain.on('run-python-code', async (event, nodes) => {
   //Generate Python file
   let stdout = await process_handler.generateAndRunPy('test')
   console.log("stdout",stdout)
+  let parsedOutput =  JSON.parse(stdout);
+  event.reply('run-python-code-output', parsedOutput)
 
 })
 

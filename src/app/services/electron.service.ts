@@ -31,5 +31,9 @@ export class ElectronMsgService {
 
   runCode(items: Array<object>) {
     this._electronService.ipcRenderer.send('run-python-code', items);
+
+    this._electronService.ipcRenderer.on('run-python-code-output', (event, output) => {
+      console.log(output);
+    })
   }
 }

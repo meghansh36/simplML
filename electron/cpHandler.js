@@ -26,9 +26,10 @@ async function generateAndRunPy(filename) {
         
         const {stdout_convert, stderr_convert} = await execute(`ipython nbconvert --to script ./ipynb-files/${filename}.ipynb`)
         const {stdout, stderr} = await execute(`python ./ipynb-files/${filename}.py`)
-        if(stderr) {
-            throw stderr
-        }
+        // if(stderr) {
+        //     console.log("inside strerr", stderr)
+        //     throw stderr
+        // }
 
         return stdout
         
