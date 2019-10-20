@@ -376,10 +376,9 @@ ipcMain.on('run-python-code', async (event, nodes) => {
     }
   })
   fs.writeFileSync("./ipynb-files/test.ipynb", JSON.stringify(ipy))
-  
   //Generate Python file
   let stdout = await process_handler.generateAndRunPy('test')
-  console.log(stdout)
+  console.log("stdout",stdout)
 
 })
 

@@ -159,6 +159,7 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
 
     runCode() {
       let orderedNodes  = this.DFS();
+      
       this.electronService.runCode(orderedNodes);
     }
 
