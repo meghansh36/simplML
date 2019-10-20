@@ -1,10 +1,21 @@
-<div class="modal-header">
+<div class="modal-header" id="resultStep1">
     <i class=" tim-icons icon-simple-remove" (click)="activeModal.dismiss('Cross click')"> </i>
 </div>
     <div class="modal-body">
       <div class="container">
         <h2>Results</h2>
-        <span>Accuracy</span><span>{{passedData.accuracy}}</span>
+        <div style="display: flex; justify-content: space-between">
+          <span>Accuracy</span><span>{{passedData.accuracy}}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between">
+          <span>Precision</span><span>{{passedData.precision}}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between">
+          <span>Recall</span><span>{{passedData.recall}}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between">
+          <span>F1</span><span>{{passedData.f1}}</span>
+        </div>
       </div>
     </div>
     
