@@ -20,6 +20,24 @@ async function getPreview(filename) {
 
 }
 
+async function generateAndRunPy(filename) {
+    try {
+        if(!fs.existsSync(`./ipynb-files/${filename}.py`)) {
+            const {stdout_convert, stderr_convert} = await execute(`ipython nbconvert --to script ./ipynb-files/${filename}.ipynb`)
+        
+            const {stdout, stderr} = await execute(`python ./ipynb-files/${filename}.py`)
+            if(stderr) {
+                throw stderr
+            }
+
+            return stdout
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 module.exports = {
     getPreview,
+    generateAndRunPy
 }

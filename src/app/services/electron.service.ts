@@ -28,4 +28,8 @@ export class ElectronMsgService {
     if(pathObj)
       return pathObj;
   }
+
+  runCode(items) {
+    this._electronService.ipcRenderer.send('run-python-code', items)
+  }
 }

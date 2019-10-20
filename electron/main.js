@@ -3,6 +3,7 @@ const process_handler = require('./cpHandler');
 const fs = require('fs')
 const os = require('os')
 const path = require('path')
+const {spawn} = require('child_process')
 let win;
 
 async function createWindow () {
@@ -272,6 +273,22 @@ function learner_SVM(node_data) {
   return cell;
 }
 
+function evaluation_cm() {
+  let cell = {
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+        "print('Accuracy: ', sm.accuracy_score(y_test,y_pred))\n",
+        "print('Precision Score: ', sm.precision_score(y_test,y_pred,average='macro'))\n",
+        "print('F1 Score: ', sm.f1_score(y_test,y_pred,average='macro'))\n",
+        "print('Recall Score: ', sm.recall_score(y_test,y_pred,average='macro'))\n",
+    ]
+  };
+  return cell;
+}
+
 ipcMain.on('generate-python-code', async (event, nodes) => {
   
   let ipy = JSON.parse(fs.readFileSync("./ipynb-files/initial.ipynb", "utf-8"))
@@ -300,6 +317,11 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
     let new_cell = eval(type)(node.data)  //Node id should match the function name
     ipy["cells"].push(new_cell)
 
+    //Confusion Matrix
+    if(node.data.parentCategory == "learner") {
+      let new_cell = evaluation_cm()
+      ipy["cells"].push(new_cell)
+    }
 
   })
 
@@ -318,6 +340,47 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
   });
 
   event.reply('generate-python-code-success')
+})
+
+ipcMain.on('run-python-code', async (event, nodes) => {
+  let ipy = JSON.parse(fs.readFileSync("./ipynb-files/initial.ipynb", "utf-8"))
+  let split_in_xy = false
+  let split_in_train_test = false
+
+  nodes.forEach(node => {
+    let type = node.id
+
+    if(type == "start" || type == "end") return;
+
+    //Split in XY
+    if(node.data.parentCategory == "processing" && !split_in_xy) {
+      let new_cell = XY_split()
+      ipy["cells"].push(new_cell)
+      split_in_xy = true
+    }
+
+    //Split in train/test
+    if(node.data.parentCategory == "learner" && !split_in_train_test) {
+      let new_cell = train_test_split()
+      ipy["cells"].push(new_cell)
+      split_in_train_test = true
+    }
+
+    let new_cell = eval(type)(node.data)  //Node id should match the function name
+    ipy["cells"].push(new_cell)
+
+    //Confusion Matrix
+    if(node.data.parentCategory == "learner") {
+      let new_cell = evaluation_cm()
+      ipy["cells"].push(new_cell)
+    }
+  })
+  fs.writeFileSync("./ipynb-files/test.ipynb", JSON.stringify(ipy))
+  
+  //Generate Python file
+  let stdout = await process_handler.generateAndRunPy('test')
+  console.log(stdout)
+
 })
 
 ipcMain.on('open-browse-dialog', async (event) => {
