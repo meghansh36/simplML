@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ElectronMsgService {
 
+  loaded = new Subject();
   constructor(private _electronService: ElectronService) {}
 
   fetchPreview(filename) {
@@ -14,8 +16,11 @@ export class ElectronMsgService {
   }
 
   generatePythonCode(items: Array<object>) {
-    let loaded:boolean = this._electronService.ipcRenderer.sendSync('generate-python-code', items);
-    return loaded
+    this._electronService.ipcRenderer.send('generate-python-code', items);
+    
+    this._electronService.ipcRenderer.on('generate-python-code-success', (event) => {
+      this.loaded.next(true);
+    })
   }
 
   openBrowseDialog() {

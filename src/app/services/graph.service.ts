@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +95,8 @@ export class GraphService {
           content: '<i class="tim-icons icon-trash-simple"></i>', // html/text content to be displayed in the menu
           contentStyle: {}, // css key:value pairs to set the command's css in js if you want
           select: (ele) => { // a function to execute when the command is selected
+            if(ele.data().id !== 'start' || ele.data().id !== 'end')
+              this.designPipelineObj.cy.remove(ele)
           },
           enabled: true // whether the command is selectable
         },

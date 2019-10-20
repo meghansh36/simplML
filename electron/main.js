@@ -299,6 +299,8 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
 
     let new_cell = eval(type)(node.data)  //Node id should match the function name
     ipy["cells"].push(new_cell)
+
+
   })
 
   fs.writeFileSync("./ipynb-files/test.ipynb", JSON.stringify(ipy));
@@ -315,7 +317,7 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
     previewWindow = null;
   });
 
-  event.returnValue = true;
+  event.reply('generate-python-code-success')
 })
 
 ipcMain.on('open-browse-dialog', async (event) => {

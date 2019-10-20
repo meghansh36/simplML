@@ -6,6 +6,9 @@ import { ElectronMsgService } from 'src/app/services/electron.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InputformComponent } from 'src/app/components/inputform/inputform.component';
 import { LoadingComponent } from 'src/app/components/loading/loading.component';
+import {take} from 'rxjs/operators'
+
+const introjs = require('../../../../node_modules/intro.js/intro')
 // import * as go from 'gojs';
 
 declare var require: any;
@@ -97,6 +100,7 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
       this.graphService.setDesignPipelineObject(this);
+      this.introMethod();
     }
 
     dropComplete(e) {
@@ -132,10 +136,13 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
       // traverse the graoh first and check use depth first search
       let orderedNodes  = this.DFS();
       const modalRef = this.modalService.open(LoadingComponent);
-      let loaded = this.electronService.generatePythonCode(orderedNodes);
-      if (loaded) {
-        modalRef.close();
-      }
+      this.electronService.generatePythonCode(orderedNodes);
+      
+      this.electronService.loaded.pipe(take(1)).subscribe(loaded => {
+        if(loaded) {
+          modalRef.close();
+        }
+      })
     }
 
     openDataForm() {
@@ -148,6 +155,53 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
       }).catch((error) => {
         console.log(error);
       });
+    }
+
+    introMethod() {
+      let intro = introjs();
+
+      intro.setOptions({
+        steps: [
+        {
+        intro: "Hola!"
+        },
+        {
+        element: "#introStep1",
+        intro:
+        "Welcome to the playground. This area is what all you need to build awesome ML models without even writing code. Let's get you up and running with how to use the playground",
+        position: "right"
+        },
+        {
+          element: "#introStep2",
+          intro:
+          "This is the COMPONENT PALLETE. From now this is your best friend. You can drag and drop components from here to build ML blocks of code.",
+          position: "right"
+        },
+        {
+          element: "#introStep3",
+          intro:
+          "This is the drop area. Every block to drag and drop here from the components pallete represent one part of the ML process.",
+          position: "right"
+        },
+        {
+          element: "#introStep4",
+          intro:
+          "This is the command area. Click on the button to perform various commands on the ML blocks.",
+          position: "right"
+        },
+        {
+          intro: "That's all for now. Try building your first simplML model right now :)"
+        }
+        ],
+        showProgress: true,
+        skipLabel: "Skip",
+        doneLabel: "Done",
+        nextLabel: "Next",
+        prevLabel: "Previous",
+        overlayOpacity: "0.8",
+        highlightClass: "customOverlayClass"
+        });
+        intro.start();
     }
 
 
