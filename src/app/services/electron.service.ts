@@ -24,12 +24,16 @@ export class ElectronMsgService {
   }
 
   openBrowseDialog() {
-    let pathObj = this._electronService.ipcRenderer.sendSync('open-browse-dialog')
+    let pathObj = this._electronService.ipcRenderer.sendSync('open-browse-dialog');
     if(pathObj)
       return pathObj;
   }
 
-  runCode(items) {
-    this._electronService.ipcRenderer.send('run-python-code', items)
+  runCode(items: Array<object>) {
+    this._electronService.ipcRenderer.send('run-python-code', items);
+
+    this._electronService.ipcRenderer.on('run-python-code-output', (event, output) => {
+      console.log(output);
+    })
   }
 }

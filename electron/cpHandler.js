@@ -22,16 +22,17 @@ async function getPreview(filename) {
 
 async function generateAndRunPy(filename) {
     try {
-        if(!fs.existsSync(`./ipynb-files/${filename}.py`)) {
-            const {stdout_convert, stderr_convert} = await execute(`ipython nbconvert --to script ./ipynb-files/${filename}.ipynb`)
+        fs.unlinkSync(`./ipynb-files/${filename}.py`)
         
-            const {stdout, stderr} = await execute(`python ./ipynb-files/${filename}.py`)
-            if(stderr) {
-                throw stderr
-            }
+        const {stdout_convert, stderr_convert} = await execute(`ipython nbconvert --to script ./ipynb-files/${filename}.ipynb`)
+        const {stdout, stderr} = await execute(`python ./ipynb-files/${filename}.py`)
+        // if(stderr) {
+        //     console.log("inside strerr", stderr)
+        //     throw stderr
+        // }
 
-            return stdout
-        }
+        return stdout
+        
     } catch (err) {
         console.log(err)
     }
