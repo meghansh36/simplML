@@ -291,6 +291,30 @@ function evaluation_cm() {
   return cell;
 }
 
+function chart_gen() {
+  let cell = {
+    "cell_type": "code",
+    "execution_count": null,
+    "metadata": {},
+    "outputs": [],
+    "source": [
+      "X_set, y_set = X_train, y_train\n",
+      "X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1, stop = X_set[:, 0].max() + 1, step = 0.01), np.arange(start = X_set[:, 1].min() - 1, stop = X_set[:, 1].max() + 1, step = 0.01))\n",
+      "plt.contourf(X1, X2, classifier.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape), alpha = 0.75, cmap = ListedColormap(('red', 'green')))\n",
+      "plt.xlim(X1.min(), X1.max())\n",
+      "plt.ylim(X2.min(), X2.max())\n",
+      "for i, j in enumerate(np.unique(y_set)):\n",
+      "\tplt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1], c = ListedColormap(('red', 'green'))(i), label = j)\n",
+      "plt.title('Awesome Model')\n",
+      "plt.xlabel('Input Parameters')\n",
+      "plt.ylabel('Output Parameters')\n",
+      "plt.legend()\n",
+      "plt.show()\n"
+    ]
+  };
+  return cell;
+}
+
 ipcMain.on('generate-python-code', async (event, nodes) => {
   
   let ipy = JSON.parse(fs.readFileSync("./ipynb-files/initial.ipynb", "utf-8"))
@@ -322,6 +346,8 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
     //Confusion Matrix
     if(node.data.parentCategory == "learner") {
       let new_cell = evaluation_cm()
+      ipy["cells"].push(new_cell)
+      new_cell = chart_gen()
       ipy["cells"].push(new_cell)
     }
 
@@ -371,9 +397,11 @@ ipcMain.on('run-python-code', async (event, nodes) => {
     let new_cell = eval(type)(node.data)  //Node id should match the function name
     ipy["cells"].push(new_cell)
 
-    //Confusion Matrix
+    //Confusion Matrix & chart
     if(node.data.parentCategory == "learner") {
       let new_cell = evaluation_cm()
+      ipy["cells"].push(new_cell)
+      new_cell = chart_gen()
       ipy["cells"].push(new_cell)
     }
   })
