@@ -1,0 +1,42 @@
+
+import matplotlib.pyplot as plt
+import matplotlib
+import json
+import numpy as np
+import pandas as pd
+import sklearn.metrics as sm
+from matplotlib.colors import ListedColormap
+from sklearn.metrics import confusion_matrix
+from sklearn import preprocessing
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import train_test_split
+# matplotlib.rcParams.update({'font.size': 22})
+
+df = pd.read_csv('/Users/savi/Desktop/Social_Network_Ads.csv')
+
+
+X = df.iloc[:,:-1].values
+y = df.iloc[:, -1].values
+
+
+sc = preprocessing.StandardScaler()
+X = sc.fit_transform(X)
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state = 0)
+
+
+classifier = SVC(kernel ='rbf', random_state = None)
+classifier.fit(X_train, y_train)
+y_pred = classifier.predict(X_test)
+
+
+accuracy = sm.accuracy_score(y_test,y_pred)
+precision = sm.precision_score(y_test,y_pred,average='macro')
+f1 = sm.f1_score(y_test,y_pred,average='macro')
+recall = sm.recall_score(y_test,y_pred,average='macro')
+cm_scores = { 'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1': f1  }
+print(json.dumps(cm_scores))
+
