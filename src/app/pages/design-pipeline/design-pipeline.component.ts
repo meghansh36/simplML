@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InputformComponent } from 'src/app/components/inputform/inputform.component';
 import { LoadingComponent } from 'src/app/components/loading/loading.component';
 import {take} from 'rxjs/operators'
+import { OutputComponent } from 'src/app/components/output/output.component';
 
 const introjs = require('../../../../node_modules/intro.js/intro')
 // import * as go from 'gojs';
@@ -159,8 +160,11 @@ export class DesignPipelineComponent implements OnInit, AfterViewInit {
 
     runCode() {
       let orderedNodes  = this.DFS();
-      
       this.electronService.runCode(orderedNodes);
+      this.electronService.codeOutput.pipe(take(1)).subscribe(output => {
+        const modalRef = this.modalService.open(OutputComponent);
+        modalRef.componentInstance.passedData = output;
+      })
     }
 
     introMethod() {

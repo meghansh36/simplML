@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 export class ElectronMsgService {
 
   loaded = new Subject();
+  codeOutput = new Subject();
   constructor(private _electronService: ElectronService) {}
 
   fetchPreview(filename) {
