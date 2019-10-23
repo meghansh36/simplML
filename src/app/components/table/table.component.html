@@ -1,0 +1,10 @@
+<div class="modal-header" id="resultStep1">
+    <i class=" tim-icons icon-simple-remove" (click)="activeModal.dismiss('Cross click')"> </i>
+</div>
+    <div class="modal-body">
+      <div class="container">
+        <h2>Data</h2>
+        <hot-table [data]="data" [colHeaders]="true" [rowHeaders]="false" [width]="400" [height]="300"></hot-table>
+      </div>
+    </div>
+    

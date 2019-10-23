@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule, NgbTooltipConfig } from "@ng-bootstrap/ng-bootstrap";
 
 import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
@@ -11,10 +11,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './loading/loading.component';
 import { UtilityModule } from '../utility/utility.module';
 import { OutputComponent } from './output/output.component';
+import { TableComponent } from './table/table.component';
+import { HotTableModule } from '@handsontable/angular';
+
 
 @NgModule({
-  imports: [CommonModule, RouterModule, NgbModule, FormsModule, ReactiveFormsModule, UtilityModule],
-  declarations: [FooterComponent, NavbarComponent, SidebarComponent, InputformComponent, LoadingComponent, OutputComponent],
-  exports: [FooterComponent, NavbarComponent, SidebarComponent]
+  imports: [CommonModule, RouterModule, NgbModule, FormsModule, ReactiveFormsModule, UtilityModule, HotTableModule],
+  declarations: [FooterComponent, NavbarComponent, SidebarComponent, InputformComponent, LoadingComponent, OutputComponent, TableComponent],
+  exports: [FooterComponent, NavbarComponent, SidebarComponent],
+  providers: [NgbTooltipConfig]
 })
 export class ComponentsModule {}

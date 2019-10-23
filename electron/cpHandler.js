@@ -26,8 +26,9 @@ async function generateAndRunPy(filename) {
         if(fs.existsSync(`./ipynb-files/${filename}.py`)){
             fs.unlinkSync(`./ipynb-files/${filename}.py`)
         }
-        
-        const {stdout_convert, stderr_convert} = await execute(`ipython nbconvert --to script ./ipynb-files/${filename}.ipynb`)
+        const {stdout_convert, stderr_convert} = await execute(`jupyter nbconvert --to python ./ipynb-files/${filename}.ipynb`)
+       
+
         const {stdout, stderr} = await execute(`python ./ipynb-files/${filename}.py`)
         
         // if(stderr) {
@@ -38,7 +39,7 @@ async function generateAndRunPy(filename) {
         return stdout
         
     } catch (err) {
-        console.log(err)
+        console.log("caught",err)
     }
 }
 

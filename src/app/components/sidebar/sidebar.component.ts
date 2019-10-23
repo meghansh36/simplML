@@ -20,15 +20,15 @@ export const ROUTES: RouteInfo[] = [
     class: ""
   },
   {
-    path: "/profile",
-    title: "Profile",
-    icon: "icon-single-02",
+    path: "tutorial",
+    title: "Tutorials",
+    icon: "icon-spaceship",
     class: ""
   },
   {
-    path: "/community",
-    title: "Community",
-    icon: "icon-vector",
+    path: "competitions",
+    title: "Competitions",
+    icon: "icon-user-run",
     class: ""
   },
 ];

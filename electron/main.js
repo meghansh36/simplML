@@ -343,7 +343,7 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
     let new_cell = eval(type)(node.data)  //Node id should match the function name
     ipy["cells"].push(new_cell)
 
-    //Confusion Matrix
+    //Model stats and plotting
     if(node.data.parentCategory == "learner") {
       let new_cell = evaluation_cm()
       ipy["cells"].push(new_cell)
@@ -425,4 +425,9 @@ ipcMain.on('open-browse-dialog', async (event) => {
     event.returnValue = {path: paths[0], sep: path.sep};
   else
     event.returnValue = undefined;
+})
+
+ipcMain.on('get-csv-string', async (event, path) => {
+  let content = fs.readFileSync(path, {encoding: 'utf-8'})
+  event.returnValue = content;
 })
