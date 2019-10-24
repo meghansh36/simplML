@@ -343,7 +343,7 @@ ipcMain.on('generate-python-code', async (event, nodes) => {
     let new_cell = eval(type)(node.data)  //Node id should match the function name
     ipy["cells"].push(new_cell)
 
-    //Confusion Matrix
+    //Model stats and plotting
     if(node.data.parentCategory == "learner") {
       let new_cell = evaluation_cm()
       ipy["cells"].push(new_cell)
