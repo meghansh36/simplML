@@ -35,7 +35,7 @@
     "gojs": "^2.0.17",
     "handsontable": "^7.2.1",
     "intro.js": "^2.9.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ng-drag-drop": "^5.0.0",
     "ng-lottie": "^0.3.2",
     "ngx-electron": "^2.1.1",
